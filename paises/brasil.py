@@ -5,7 +5,7 @@ class Brasil(Pais):
     def __init__(self):
         super().__init__("Brasil")
         # Rangos de letras asignados a cada estado
-        self.estados = {
+        self.ciudad = {
             "Acre": ("AAA", "BEZ"),
             "Alagoas": ("BFA", "CAZ"),
             "Amapá": ("CBA", "DAZ"),
@@ -44,13 +44,14 @@ class Brasil(Pais):
             letra = matricula[4]
 
             # Verificar el estado según las letras iniciales
-            for estado, (inicio, fin) in self.estados.items():
+            for ciudad, (inicio, fin) in self.ciudad.items():
                 if inicio <= letras <= fin:
                     return True, {
+                        "matricula": matricula,
                         "letras": letras,
                         "numeros": numeros,
                         "letra": letra,
-                        "estado": estado
+                        "ciudad": ciudad
                     }
         return False, {}
 
