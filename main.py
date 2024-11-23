@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
 import re
+from PIL import Image, ImageTk
 from paises.argentina import Argentina
 from paises.brasil import Brasil
 from paises.colombia import Colombia
@@ -26,17 +27,19 @@ BANDERAS = {
     'Perú': '🇵🇪'
 }
 
-
 def crear_imagen_bandera(pais):
     """Crea un Label con la bandera del país"""
-    if pais in BANDERAS:
-        return tk.Label(
-            text=BANDERAS[pais],
-            font=('Arial', 48),  # Tamaño grande para la bandera
-            bg=COLORS['background']
-        )
-    return None
-
+    try:
+        image_path = f"banderas/{pais.lower()}.png"
+        image = Image.open(image_path)
+        image = image.resize((100, 60), Image.Resampling.LANCZOS)  # Ajustar el tamaño de la imagen
+        photo = ImageTk.PhotoImage(image)
+        label = tk.Label(image=photo, bg=COLORS['background'])
+        label.image = photo  # Keep a reference to avoid garbage collection
+        return label
+    except Exception as e:
+        print(f"Error al cargar la imagen de la bandera para {pais}: {e}")
+        return None
 
 class MatriculasApp:
     def __init__(self, root):
@@ -55,6 +58,7 @@ class MatriculasApp:
             Peru()
         ]
 
+        self.bandera_label = None  # Referencia a la etiqueta de la bandera
         self.setup_ui()
 
     def setup_ui(self):
@@ -145,22 +149,26 @@ class MatriculasApp:
             bg=COLORS['primary']))
 
     def mostrar_bandera(self, pais):
-        # Limpiar el frame de la bandera
+        # Limpiar el frame de la bandera correctamente
         for widget in self.bandera_frame.winfo_children():
             widget.destroy()
 
-        # Crear y mostrar la nueva bandera
-        bandera_label = crear_imagen_bandera(pais)
-        if bandera_label:
-            bandera_label.pack(in_=self.bandera_frame)
+        if pais:
+            # Crear y mostrar la nueva bandera
+            bandera_label = crear_imagen_bandera(pais)
+            if bandera_label:
+                bandera_label.pack(in_=self.bandera_frame)
+                self.bandera_label = bandera_label  # Mantener la referencia de la imagen
+            else:
+                # Si no hay bandera disponible, eliminar cualquier referencia previa
+                self.bandera_label = None
 
     def analizar_matricula(self):
         matricula = self.entry_matricula.get().strip().upper()
         resultados = []
 
         # Limpiar bandera anterior
-        for widget in self.bandera_frame.winfo_children():
-            widget.destroy()
+        self.mostrar_bandera("")
 
         for pais in self.paises:
             valido, partes = pais.validar_matricula(matricula)

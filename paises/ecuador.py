@@ -66,15 +66,15 @@ class Ecuador(Pais):
     def derivar_matricula(self, partes):
         # Derivación por la izquierda
         matricula = partes["matricula"]
-        pasos = ["<matricula>", "<ecuador>", "<provincia><numeros><letras>"]
+        pasos = ["<matricula>", "<ecuador>", "<provincia><letras><numeros>"]
         provincia = matricula[0]
-        numeros = matricula[3:7]
-        letras = matricula[:3]
-        pasos.append(f"{provincia}<numeros><letras>")
-        for i in range(len(numeros)):
-            pasos.append(f"{provincia}{numeros[:i+1]}<numeros><letras>")
-        pasos[-1] = pasos[-1].replace("<numeros>", f"{numeros}")
+        letras = matricula[1:3]
+        numeros = matricula[3:]
+        pasos.append(f"{provincia}<letras><numeros>")
         for i in range(len(letras)):
-            pasos.append(f"{provincia}{numeros}{letras[:i+1]}<letras>")
-        pasos[-1] = pasos[-1].replace("<letras>", "")
+            pasos.append(f"{provincia}{letras[:i + 1]}<letras><numeros>")
+        pasos[-1] = pasos[-1].replace("<letras>", f"{letras}")
+        for i in range(len(numeros)):
+            pasos.append(f"{provincia}{letras}{numeros[:i + 1]}<numeros>")
+        pasos[-1] = pasos[-1].replace("<numeros>", "")
         return pasos
