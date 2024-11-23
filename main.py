@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox, scrolledtext, ttk
+from tkinter import messagebox, scrolledtext
+import re
 from paises.argentina import Argentina
 from paises.brasil import Brasil
 from paises.colombia import Colombia
@@ -45,7 +46,7 @@ class MatriculasApp:
         self.root.configure(bg=COLORS['background'])
 
         # Configurar archivo Excel y países
-        archivo_excel_colombia = "PlacasColombia.xlsx"
+        archivo_excel_colombia = "paises/PlacasColombia.xlsx"
         self.paises = [
             Colombia(archivo_excel_colombia),
             Argentina(),
@@ -64,7 +65,7 @@ class MatriculasApp:
         # Título
         title_label = tk.Label(
             main_frame,
-            text="Sistema de Análisis de Matrículas",
+            text="Sistema de Identification de Matrículas",
             font=('Arial', 24, 'bold'),
             bg=COLORS['background'],
             fg=COLORS['primary']
@@ -185,6 +186,8 @@ class MatriculasApp:
                     resultado += f"🏢 Departamento: {partes['departamento']}\n"
                 if "ciudad" in partes:
                     resultado += f"🌆 Ciudad: {partes['ciudad']}\n"
+                if "servicio" in partes:
+                    resultado += f"🔤 Tipo de vehículo: {partes['servicio']}\n"
 
                 resultado += "\n📝 Derivación por la izquierda:\n"
                 for paso in derivacion:
@@ -209,7 +212,6 @@ class MatriculasApp:
         else:
             self.text_resultado.configure(bg='#FADBD8')  # Rojo suave para error
             messagebox.showerror("Error", "❌ Formato de matrícula inválido o no corresponde a ningún país disponible.")
-
 
 if __name__ == "__main__":
     root = tk.Tk()

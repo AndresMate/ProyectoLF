@@ -8,29 +8,58 @@ class Ecuador(Pais):
         self.provincias = {
             "A": "Azuay",
             "B": "Bolívar",
+            "U": "Cañar",
             "C": "Carchi",
+            "X": "Cotopaxi",
+            "H": "Chimborazo",
+            "O": "El Oro",
+            "E": "Esmeraldas",
+            "Q": "Orellana",
+            "W": "Galápagos",
             "G": "Guayas",
+            "I": "Imbabura",
+            "L": "Loja",
+            "R": "Los Rios",
+            "M": "Manabí",
+            "V": "Morona Santiago",
+            "N": "Napo",
+            "S": "Pastaza",
             "P": "Pichincha",
-            "R": "Los Ríos",
-            "S": "Santa Elena",
+            "Y": "Santa Elena",
+            "J": "Santo Domingo de los Tsáchilas",
+            "K": "Sucumbíos",
             "T": "Tungurahua",
             "Z": "Zamora Chinchipe",
         }
+        # Diccionario para la segunda letra
+        self.segunda_letra_significado = {
+            "Vehículos comerciales": ["A", "U", "Z"],
+            "Vehículos gubernamentales": ["E"],
+            "Vehículos de uso oficial": ["X"],
+            "Gads regionales": ["M"],
+            # Agrega más mapeos según sea necesario
+        }
 
     def validar_matricula(self, matricula):
-        # Validar formato: L###LLL (1 letra, 3 números, 3 letras)
-        patron = r"^[A-Z]\d{3}[A-Z]{3}$"
+        # Validar formato: LLL#### (3 letras, 4 números)
+        patron = r"^[A-Z]{3}\d{4}$"
         if re.match(patron, matricula):
             primer_caracter = matricula[0]  # Primer carácter identifica la provincia
-            numeros = matricula[1:4]
-            letras = matricula[4:]
+            segundo_caracter = matricula[1]  # Segundo carácter significativo
+            numeros = matricula[3:7]
 
             # Identificar la provincia por el primer carácter
             if primer_caracter in self.provincias:
                 provincia = self.provincias[primer_caracter]
+                significado_segunda_letra = "Vehículos Particulares"
+                for significado, letras in self.segunda_letra_significado.items():
+                    if segundo_caracter in letras:
+                        significado_segunda_letra = significado
+                        break
                 return True, {
                     "matricula": matricula,
-                    "provincia": provincia
+                    "provincia": provincia,
+                    "servicio": significado_segunda_letra
                 }
         return False, {}
 
@@ -39,8 +68,8 @@ class Ecuador(Pais):
         matricula = partes["matricula"]
         pasos = ["<matricula>", "<ecuador>", "<provincia><numeros><letras>"]
         provincia = matricula[0]
-        numeros = matricula[1:4]
-        letras = matricula[4:]
+        numeros = matricula[3:7]
+        letras = matricula[:3]
         pasos.append(f"{provincia}<numeros><letras>")
         for i in range(len(numeros)):
             pasos.append(f"{provincia}{numeros[:i+1]}<numeros><letras>")
