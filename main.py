@@ -2,11 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, scrolledtext
 import re
 from PIL import Image, ImageTk
-from paises.argentina import Argentina
-from paises.brasil import Brasil
-from paises.colombia import Colombia
-from paises.ecuador import Ecuador
-from paises.peru import Peru
+import importlib
 
 # Definición de colores y estilos
 COLORS = {
@@ -16,15 +12,6 @@ COLORS = {
     'background': '#F4D03F',  # Color mostaza para fondo
     'text': '#2C3E50',  # Color texto principal
     'success': '#27AE60'  # Verde para éxito
-}
-
-# Diccionario de banderas por país
-BANDERAS = {
-    'Argentina': '🇦🇷',
-    'Brasil': '🇧🇷',
-    'Colombia': '🇨🇴',
-    'Ecuador': '🇪🇨',
-    'Perú': '🇵🇪'
 }
 
 def crear_imagen_bandera(pais):
@@ -43,6 +30,11 @@ def crear_imagen_bandera(pais):
 
 class MatriculasApp:
     def __init__(self, root):
+        self.entry_matricula = None
+        self.text_resultado = None
+        self.btn_limpiar = None
+        self.btn_analizar = None
+        self.bandera_frame = None
         self.root = root
         self.root.title("Análisis de Matrículas Internacionales")
         self.root.geometry("800x700")  # Un poco más alto para la bandera
@@ -50,16 +42,22 @@ class MatriculasApp:
 
         # Configurar archivo Excel y países
         archivo_excel_colombia = "paises/PlacasColombia.xlsx"
-        self.paises = [
-            Colombia(archivo_excel_colombia),
-            Argentina(),
-            Brasil(),
-            Ecuador(),
-            Peru()
-        ]
+        self.paises = self.cargar_paises(archivo_excel_colombia)
 
         self.bandera_label = None  # Referencia a la etiqueta de la bandera
         self.setup_ui()
+
+    def cargar_paises(self, archivo_excel_colombia):
+        paises = ["argentina", "brasil", "colombia", "ecuador", "peru"]
+        clases_paises = []
+        for pais in paises:
+            modulo = importlib.import_module(f"paises.{pais}")
+            clase_pais = getattr(modulo, pais.capitalize())
+            if pais == "colombia":
+                clases_paises.append(clase_pais(archivo_excel_colombia))
+            else:
+                clases_paises.append(clase_pais())
+        return clases_paises
 
     def setup_ui(self):
         # Frame principal
