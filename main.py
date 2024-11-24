@@ -117,6 +117,31 @@ class MatriculasApp:
         )
         self.btn_analizar.pack(pady=10)
 
+        # Botón de limpiar
+        self.btn_limpiar = tk.Button(
+            input_frame,
+            text="🧹 Limpiar",
+            command=self.limpiar_pantalla,
+            bg=COLORS['accent'],
+            fg='white',
+            font=('Arial', 12, 'bold'),
+            relief='raised',
+            cursor='hand2',
+            padx=20,
+            pady=10
+        )
+        self.btn_limpiar.pack(pady=10)
+
+        # Configurar hover effects
+        self.btn_analizar.bind('<Enter>', lambda e: self.btn_analizar.config(
+            bg=COLORS['secondary']))
+        self.btn_analizar.bind('<Leave>', lambda e: self.btn_analizar.config(
+            bg=COLORS['primary']))
+        self.btn_limpiar.bind('<Enter>', lambda e: self.btn_limpiar.config(
+            bg=COLORS['secondary']))
+        self.btn_limpiar.bind('<Leave>', lambda e: self.btn_limpiar.config(
+            bg=COLORS['accent']))
+
         # Área de resultados
         result_frame = tk.Frame(main_frame, bg=COLORS['background'])
         result_frame.pack(fill='both', expand=True, padx=20, pady=(20, 0))
@@ -142,33 +167,23 @@ class MatriculasApp:
         )
         self.text_resultado.pack(fill='both', expand=True)
 
-        # Configurar hover effects
-        self.btn_analizar.bind('<Enter>', lambda e: self.btn_analizar.config(
-            bg=COLORS['secondary']))
-        self.btn_analizar.bind('<Leave>', lambda e: self.btn_analizar.config(
-            bg=COLORS['primary']))
-
     def mostrar_bandera(self, pais):
-        # Limpiar el frame de la bandera correctamente
+        """Crea y retorna un Label con la bandera del país"""
         for widget in self.bandera_frame.winfo_children():
             widget.destroy()
 
         if pais:
-            # Crear y mostrar la nueva bandera
             bandera_label = crear_imagen_bandera(pais)
             if bandera_label:
-                bandera_label.pack(in_=self.bandera_frame)
-                self.bandera_label = bandera_label  # Mantener la referencia de la imagen
-            else:
-                # Si no hay bandera disponible, eliminar cualquier referencia previa
-                self.bandera_label = None
+                return bandera_label
+        return None
 
     def analizar_matricula(self):
         matricula = self.entry_matricula.get().strip().upper()
         resultados = []
 
-        # Limpiar bandera anterior
-        self.mostrar_bandera("")
+        self.text_resultado.delete(1.0, tk.END)
+        self.text_resultado.configure(bg='white')
 
         for pais in self.paises:
             valido, partes = pais.validar_matricula(matricula)
@@ -176,9 +191,6 @@ class MatriculasApp:
                 derivacion = []
                 if hasattr(pais, "derivar_matricula"):
                     derivacion = pais.derivar_matricula(partes)
-
-                # Mostrar la bandera del país
-                self.mostrar_bandera(pais.nombre)
 
                 resultado = f"\n=== RESULTADO PARA {pais.nombre.upper()} ===\n\n"
                 resultado += f"🚗 Matrícula analizada: {matricula}\n"
@@ -203,23 +215,29 @@ class MatriculasApp:
 
                 resultado += "\n" + "=" * 50 + "\n"
 
-                resultados.append((pais.nombre, resultado))
-
-        # Mostrar resultados
-        self.text_resultado.delete(1.0, tk.END)
+                resultados.append((pais.nombre, resultado, self.mostrar_bandera(pais.nombre)))
 
         if resultados:
             if len(resultados) > 1:
                 self.text_resultado.insert(tk.END, "⚠️ ¡ATENCIÓN! La matrícula es válida en múltiples países:\n")
-                for pais, res in resultados:
+                for pais, res, bandera in resultados:
+                    if bandera:
+                        self.text_resultado.window_create(tk.END, window=bandera)
                     self.text_resultado.insert(tk.END, res)
             else:
+                if resultados[0][2]:
+                    self.text_resultado.window_create(tk.END, window=resultados[0][2])
                 self.text_resultado.insert(tk.END, resultados[0][1])
 
             self.text_resultado.configure(bg='#E8F8F5')  # Verde suave para éxito
         else:
             self.text_resultado.configure(bg='#FADBD8')  # Rojo suave para error
             messagebox.showerror("Error", "❌ Formato de matrícula inválido o no corresponde a ningún país disponible.")
+
+    def limpiar_pantalla(self):
+        self.entry_matricula.delete(0, tk.END)
+        self.text_resultado.delete(1.0, tk.END)
+        self.mostrar_bandera("")
 
 if __name__ == "__main__":
     root = tk.Tk()
