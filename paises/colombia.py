@@ -29,18 +29,6 @@ def cargar_rangos(archivo_excel):
 
     return rangos
 
-def derivar_matricula(partes):
-    # Derivación por la izquierda para Colombia
-    matricula = partes["matricula"]
-    pasos = ["<matricula>", "<colombia>", "<prefijo><numeros>"]
-    prefijo = matricula[:3]
-    numeros = matricula[3:]
-    pasos.append(f"{prefijo}<numeros>")
-    for i in range(len(numeros)):
-        pasos.append(f"{prefijo}{numeros[:i+1]}<numeros>")
-    pasos[-1] = pasos[-1].replace("<numeros>", "")
-    return pasos
-
 class Colombia:
     def __init__(self, archivo_excel):
         self.nombre = "Colombia"
@@ -62,7 +50,8 @@ class Colombia:
                         }
         return False, {}
 
-    def derivar_matricula(self,partes):
+    @staticmethod
+    def derivar_matricula(partes):
         # Derivación por la izquierda para Colombia
         matricula = partes["matricula"]
         pasos = ["<matricula>", "<colombia>", "<prefijo><numeros>"]

@@ -57,9 +57,9 @@ class Brasil(Pais):
 
     def derivar_matricula(self, partes):
         # Derivación por la izquierda
-        pasos = ["<matricula>", "<brasil>", "<letras3><digito><letra><digito><digito>"]
-        pasos.append(f"{partes['letras']}{partes['numeros'][0]}<letra><digito><digito>")
-        pasos.append(f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}<digito><digito>")
-        pasos.append(f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{partes['numeros'][1]}<digito>")
+        pasos = ["<matricula>", "<brasil>", "<letras3><digito><letra><digito><digito>",
+                 f"{partes['letras']}{partes['numeros'][0]}<letra><digito><digito>",
+                 f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}<digito><digito>",
+                 f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{partes['numeros'][1]}<digito>"]
         pasos[-1] = f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{''.join(partes['numeros'][1:])}"
         return pasos

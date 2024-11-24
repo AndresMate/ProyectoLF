@@ -48,8 +48,8 @@ class Argentina(Pais):
 
     def derivar_matricula(self, partes):
         # Derivación por la izquierda
-        pasos = ["<matricula>", "<argentina>", "<letras2><numeros><letras2>"]
-        pasos.append(f"{partes['letras_inicio']}<numeros>{partes['letras_final']}")
+        pasos = ["<matricula>", "<argentina>", "<letras2><numeros><letras2>",
+                 f"{partes['letras_inicio']}<numeros>{partes['letras_final']}"]
         for i, digito in enumerate(partes["numeros"]):
             pasos.append(f"{partes['letras_inicio']}{''.join(partes['numeros'][:i + 1])}{''.join(partes['numeros'][i + 1:])}{partes['letras_final']}")
         pasos[-1] = pasos[-1].replace("<numeros>", ''.join(partes["numeros"]))
