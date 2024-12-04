@@ -9,7 +9,7 @@ COLORS = {
     'primary': '#1B4F72',  # Azul oscuro para título
     'secondary': '#3498DB',  # Azul secundario
     'accent': '#E74C3C',  # Rojo para alertas
-    'background': '#F4D03F',  # Color mostaza para fondo
+    'background': '#CAFA5A',  # Color mostaza para fondo
     'text': '#2C3E50',  # Color texto principal
     'success': '#27AE60'  # Verde para éxito
 }
