@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
-import re
 from PIL import Image, ImageTk
 import importlib
 
@@ -48,7 +47,7 @@ class MatriculasApp:
         self.setup_ui()
 
     def cargar_paises(self, archivo_excel_colombia):
-        paises = ["argentina", "brasil", "colombia", "ecuador", "peru"]
+        paises = ["argentina", "brasil", "colombia", "chile", "ecuador", "peru","paraguay"]
         clases_paises = []
         for pais in paises:
             modulo = importlib.import_module(f"paises.{pais}")
