@@ -4,7 +4,6 @@ from paises.pais import Pais
 class Peru(Pais):
     def __init__(self):
         super().__init__("Perú")
-        # Diccionario de zonas registrales con su primer carácter y departamentos
         self.regiones = {
             "P": ["Tumbes", "Piura"],
             "M": ["Lambayeque", "Cajamarca", "Amazonas"],
@@ -20,27 +19,27 @@ class Peru(Pais):
             "V": ["Arequipa"],
             "Z": ["Moquegua", "Tacna", "Puno"]
         }
+        self.tipos_vehiculos = {
+            r"^[A-Z]\d[A-Z]-\d{3}$": "Vehículo público",
+            r"^[A-Z]{2}\d-\d{3}$": "Vehículo gubernamental",
+            r"^[A-Z]{3}-\d{3}$": "Vehículo particular"
+        }
 
     def validar_matricula(self, matricula):
-        # Validar formato general: Primer carácter, números y letras (ejemplo: A123BCD)
-        patron = r"^[A-Z]\d{3}[A-Z]{3}$"
-        if re.match(patron, matricula):
-            primer_caracter = matricula[0]  # El primer carácter identifica la región
-            numeros = matricula[1:4]
-            letras = matricula[4:]
-
-            # Identificar la región según el primer carácter
-            if primer_caracter in self.regiones:
-                departamentos = ", ".join(self.regiones[primer_caracter])
-                return True, {
-                    "matricula": matricula,
-                    "region": primer_caracter,
-                    "departamentos": departamentos
-                }
+        for patron, tipo in self.tipos_vehiculos.items():
+            if re.match(patron, matricula):
+                region = matricula[0]
+                if region in self.regiones:
+                    departamentos = ", ".join(self.regiones[region])
+                    return True, {
+                        "matricula": matricula,
+                        "region": region,
+                        "departamentos": departamentos,
+                        "servicio": tipo
+                    }
         return False, {}
 
     def derivar_matricula(self, partes):
-        # Derivación por la izquierda
         matricula = partes["matricula"]
         pasos = ["<matricula>", "<peru>", "<region><numeros><letras>"]
         region = matricula[0]
