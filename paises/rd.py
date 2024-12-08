@@ -1,7 +1,7 @@
 import re
 from paises.pais import Pais
 
-class RepublicaDominicana(Pais):
+class Rd(Pais):
     def __init__(self):
         super().__init__("República Dominicana")
         self.patron = re.compile(r'^[A-Z] \d{6}$')  # Regex pattern for the license plate format

@@ -1,7 +1,7 @@
 import re
 from paises.pais import Pais
 
-class CostaRica(Pais):
+class Costa(Pais):
     def __init__(self):
         super().__init__("Costa Rica")
 

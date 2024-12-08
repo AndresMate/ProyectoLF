@@ -1,7 +1,7 @@
 import re
 from paises.pais import Pais
 
-class ElSalvador(Pais):
+class Salvador(Pais):
     def __init__(self):
         super().__init__("El Salvador")
         self.patron = re.compile(r'^[A-Z]{1,2}\d{3} \d{3}$')  # Regex pattern for the license plate format
