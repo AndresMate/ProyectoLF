@@ -10,11 +10,10 @@ def cargar_rangos(archivo_excel):
     for _, row in data.iterrows():
         rango_inicial = str(row["RANGO"]) if not pd.isna(row["RANGO"]) else "ZZZ999"
         rango_final = str(row["Unnamed: 1"]) if not pd.isna(row["Unnamed: 1"]) else "ZZZ999"
-        departamento = row["LOCALIZACION"]  # Columna del departamento
-        ciudad = row["Unnamed: 3"]  # Columna de la ciudad
-        servicio = row["SERVICIO"]  # Columna del servicio
+        departamento = row["LOCALIZACION"]
+        ciudad = row["Unnamed: 3"]
+        servicio = row["SERVICIO"]
 
-        # Manejar valores nulos en las columnas
         if pd.isna(departamento):
             departamento = "Desconocido"
         if pd.isna(ciudad):
@@ -22,7 +21,6 @@ def cargar_rangos(archivo_excel):
         if pd.isna(servicio):
             servicio = "No disponible"
 
-        # Registrar los rangos en el diccionario
         if departamento not in rangos:
             rangos[departamento] = []
         rangos[departamento].append((rango_inicial, rango_final, ciudad, servicio))

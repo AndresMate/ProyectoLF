@@ -36,18 +36,18 @@ class MatriculasApp:
         self.bandera_frame = None
         self.root = root
         self.root.title("Análisis de Matrículas Internacionales")
-        self.root.geometry("800x700")  # Un poco más alto para la bandera
+        self.root.geometry("800x700")
         self.root.configure(bg=COLORS['background'])
 
         # Configurar archivo Excel y países
         archivo_excel_colombia = "paises/PlacasColombia.xlsx"
         self.paises = self.cargar_paises(archivo_excel_colombia)
 
-        self.bandera_label = None  # Referencia a la etiqueta de la bandera
+        self.bandera_label = None
         self.setup_ui()
 
     def cargar_paises(self, archivo_excel_colombia):
-        paises = ["argentina", "brasil", "colombia", "chile", "ecuador", "peru","paraguay"]
+        paises = ["argentina", "brasil", "colombia", "chile", "ecuador", "peru","paraguay", "bolivia", "uruguay", "venezuela", "costarica", "panama", "mexico"]
         clases_paises = []
         for pais in paises:
             modulo = importlib.import_module(f"paises.{pais}")
@@ -226,9 +226,9 @@ class MatriculasApp:
                     self.text_resultado.window_create(tk.END, window=resultados[0][2])
                 self.text_resultado.insert(tk.END, resultados[0][1])
 
-            self.text_resultado.configure(bg='#E8F8F5')  # Verde suave para éxito
+            self.text_resultado.configure(bg='#E8F8F5')
         else:
-            self.text_resultado.configure(bg='#FADBD8')  # Rojo suave para error
+            self.text_resultado.configure(bg='#FADBD8')
             messagebox.showerror("Error", "❌ Formato de matrícula inválido o no corresponde a ningún país disponible.")
 
     def limpiar_pantalla(self):
