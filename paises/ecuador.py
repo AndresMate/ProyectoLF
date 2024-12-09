@@ -4,6 +4,7 @@ from paises.pais import Pais
 class Ecuador(Pais):
     def __init__(self):
         super().__init__("Ecuador")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Una letra seguida de dos letras, un guion y cuatro dígitos."
         self.provincias = {
             "A": "Azuay",
             "B": "Bolívar",

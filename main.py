@@ -252,7 +252,7 @@ class MatriculasApp:
                     derivacion = pais.derivar_matricula(partes)
 
                 resultado = f"\n=== RESULTADO PARA {pais.nombre.upper()} ===\n\n"
-                resultado +=f"Analisis lexico: {pais.nombre}\n"
+                resultado +=f"Analisis lexico: {pais.lexico}\n"
                 resultado += f"🚗 Matrícula analizada: {matricula}\n"
                 resultado += f"📍 País identificado: {pais.nombre}\n"
 

@@ -5,6 +5,7 @@ from paises.pais import Pais
 class Mexico(Pais):
     def __init__(self):
         super().__init__("México")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Una letra seguida de dos dígitos y un guion, seguido de tres letras."
         self.regiones = {
             "Aguascalientes": ("AAA", "AFZ"),
             "Baja California": ("AGA", "CYZ"),

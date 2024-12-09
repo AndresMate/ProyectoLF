@@ -5,6 +5,7 @@ from tkinter import Tk, StringVar, OptionMenu, Button
 class Brasil(Pais):
     def __init__(self):
         super().__init__("Brasil")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Tres letras seguidas de un número, seguido de una letra y dos números."
         self.tipos_vehiculos = {
             "rojo": "Comercial",
             "verde": "Especial",
@@ -50,6 +51,7 @@ class Brasil(Pais):
                 "numeros": numeros,
                 "letra": letra,
                 "tipo_vehiculo": tipo_vehiculo
+
             }
         return False, {}
 

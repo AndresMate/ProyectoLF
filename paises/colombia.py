@@ -30,6 +30,7 @@ def cargar_rangos(archivo_excel):
 class Colombia:
     def __init__(self, archivo_excel):
         self.nombre = "Colombia"
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Tres letras en mayúscula seguidas de un espacio y tres números."
         self.rangos_departamentos = cargar_rangos(archivo_excel)
 
     def validar_matricula(self, matricula):

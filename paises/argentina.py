@@ -4,8 +4,7 @@ from paises.pais import Pais
 class Argentina(Pais):
     def __init__(self):
         super().__init__("Argentina")
-
-
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Dos letras seguidas de un espacio, seguido de tres números, seguido de un espacio, seguido de dos letras."
 
     def validar_matricula(self, matricula):
         # Validar formato general de Argentina sin guiones
@@ -19,10 +18,10 @@ class Argentina(Pais):
             return True, {
                 "letras_inicio": letras_inicio,
                 "numeros": numeros,
-                "letras_final": letras_final
+                "letras_final": letras_final,
+                "lexico": self.lexico
             }
         return False, {}
-
 
     def derivar_matricula(self, partes):
         """

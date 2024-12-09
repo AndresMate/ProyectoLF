@@ -4,6 +4,7 @@ from paises.pais import Pais
 class Haiti(Pais):
     def __init__(self):
         super().__init__("Haiti")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Dos letras seguidas de un espacio y cinco dígitos."
         self.patron = re.compile(r'^[A-Z]{2} \d{5}$')  # Regex pattern for the license plate format
 
     def validar_matricula(self, matricula):

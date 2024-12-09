@@ -3,6 +3,7 @@ import re
 class Chile:
     def __init__(self):
         self.nombre = "Chile"
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Dos letras seguidas de un guion, seguido de dos letras y dos números."
         self.letras_permitidas = "BCDFGHJKLPRSTVWXYZ"
         self.patron = re.compile(r'^[BCDFGHJKLPRSTVWXYZ]{2}-[BCDFGHJKLPRSTVWXYZ]{2} \d{2}$')
 

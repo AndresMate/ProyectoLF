@@ -4,7 +4,7 @@ from paises.pais import Pais
 class Panama(Pais):
     def __init__(self):
         super().__init__("Panamá")
-
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Seis dígitos o dos letras seguidas de cuatro dígitos."
         self.formatos = {
             "numerico": r"^\d{6}$",
             "alfanumerico": r"^[A-Z]{2}\d{4}$"

@@ -4,6 +4,7 @@ from paises.pais import Pais
 class Rd(Pais):
     def __init__(self):
         super().__init__("República Dominicana")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Una letra seguida de un espacio y seis dígitos."
         self.patron = re.compile(r'^[A-Z] \d{6}$')  # Regex pattern for the license plate format
         self.tipos_vehiculos = {
             "A": "Automóvil privado",

@@ -3,6 +3,7 @@ import re
 class Paraguay:
     def __init__(self):
         self.nombre = "Paraguay"
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Cuatro letras seguidas de un espacio y tres dígitos."
         self.patron = re.compile(r'^[A-Z]{4} \d{3}$')  # Updated regex pattern
 
     def validar_matricula(self, matricula):

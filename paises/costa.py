@@ -4,7 +4,7 @@ from paises.pais import Pais
 class Costa(Pais):
     def __init__(self):
         super().__init__("Costa Rica")
-
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Tres consonantes seguidas de un guion y tres dígitos, o una combinación de letras y números que representan una categoría seguida de un espacio y cinco dígitos."
         self.tipos = {
             "privados": r"^[B-DF-HJ-NP-TV-Z]{3}-\d{3}$",  # Updated pattern to exclude vowels
             "especiales": r"^(AB|SJB|C|CC|CD|CL|D|M|PE|TA|TSJ|VH) \d{5}$"

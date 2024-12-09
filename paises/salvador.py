@@ -4,6 +4,7 @@ from paises.pais import Pais
 class Salvador(Pais):
     def __init__(self):
         super().__init__("El Salvador")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Una o dos letras seguidas de tres dígitos, un espacio y tres dígitos."
         self.patron = re.compile(r'^[A-Z]{1,2}\d{3} \d{3}$')
         self.tipos_vehiculos = {
             "A": "Alquiler",

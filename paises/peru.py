@@ -4,6 +4,7 @@ from paises.pais import Pais
 class Peru(Pais):
     def __init__(self):
         super().__init__("Perú")
+        self.lexico = "El análisis léxico de la matrícula nos indica que el formato es: Una letra seguida de un dígito seguido de tres letras y un guion, seguido de tres dígitos o dos letras seguidas de un guion y tres dígitos."
         self.regiones = {
             "P": ["Tumbes", "Piura"],
             "M": ["Lambayeque", "Cajamarca", "Amazonas"],
