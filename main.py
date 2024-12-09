@@ -78,8 +78,7 @@ class MatriculasApp:
             modulo = importlib.import_module(f"paises.{pais}")
             clase_pais = getattr(modulo, pais.capitalize())
             if pais == "colombia":
-                # Código específico para Colombia
-                pass
+                clases_paises.append(clase_pais(archivo_excel_colombia))
             else:
                 clases_paises.append(clase_pais())
         return clases_paises
