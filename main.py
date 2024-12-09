@@ -224,6 +224,7 @@ class MatriculasApp:
                 )
                 btn_bandera.image = bandera_label.image  # Keep a reference to avoid garbage collection
                 btn_bandera.pack(side='left', padx=5)
+##################
 
     def analizar_matricula(self):
         # Implementar la lógica de análisis de matrícula
@@ -254,8 +255,8 @@ class MatriculasApp:
                     resultado += f"🏢 Departamento: {partes['departamento']}\n"
                 if "ciudad" in partes:
                     resultado += f"🌆 Ciudad: {partes['ciudad']}\n"
-                if "servicio" in partes:
-                    resultado += f"🔤 Tipo de vehículo: {partes['servicio']}\n"
+                if "tipo_vehiculo" in partes:
+                    resultado += f"🔤 Tipo de vehículo: {partes['tipo_vehiculo']}\n"
 
                 resultado += "\n📝 Derivación por la izquierda:\n"
                 for paso in derivacion:

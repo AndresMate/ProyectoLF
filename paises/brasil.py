@@ -1,5 +1,6 @@
 import re
 from paises.pais import Pais
+from tkinter import Tk, StringVar, OptionMenu, Button
 
 class Brasil(Pais):
     def __init__(self):
@@ -34,6 +35,14 @@ class Brasil(Pais):
             "Sergipe": ("ZJA", "ZQZ"),
             "Tocantins": ("ZRA", "ZZZ")
         }
+        self.tipos_vehiculos = {
+            "rojo": "Comercial",
+            "verde": "Especial",
+            "blanco": "Colección",
+            "gris": "Colección",
+            "amarillo": "Diplomático",
+            "negro": "Privado"
+        }
 
     def validar_matricula(self, matricula):
         # Validar formato general de Brasil
@@ -46,12 +55,35 @@ class Brasil(Pais):
             # Verificar el estado según las letras iniciales
             for ciudad, (inicio, fin) in self.ciudad.items():
                 if inicio <= letras <= fin:
+                    # Crear ventana para seleccionar el color de las letras
+                    root = Tk()
+                    root.withdraw()  # Ocultar la ventana principal
+
+                    color_var = StringVar(root)
+                    color_var.set("Seleccione el color")
+
+                    color_options = ["rojo", "verde", "blanco", "gris", "amarillo", "negro"]
+                    color_dropdown = OptionMenu(root, color_var, *color_options)
+                    color_dropdown.pack()
+
+                    def on_select():
+                        root.quit()
+
+                    select_button = Button(root, text="Seleccionar", command=on_select)
+                    select_button.pack()
+
+                    root.deiconify()  # Mostrar la ventana principal
+                    root.mainloop()
+
+                    color = color_var.get()
+                    tipo_vehiculo = self.tipos_vehiculos.get(color.lower(), "Desconocido")
                     return True, {
                         "matricula": matricula,
                         "letras": letras,
                         "numeros": numeros,
                         "letra": letra,
-                        "ciudad": ciudad
+                        "ciudad": ciudad,
+                        "tipo_vehiculo": tipo_vehiculo
                     }
         return False, {}
 
@@ -60,6 +92,6 @@ class Brasil(Pais):
         pasos = ["<matricula>", "<brasil>", "<letras3><digito><letra><digito><digito>",
                  f"{partes['letras']}{partes['numeros'][0]}<letra><digito><digito>",
                  f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}<digito><digito>",
-                 f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{partes['numeros'][1]}<digito>"]
-        pasos[-1] = f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{''.join(partes['numeros'][1:])}"
+                 f"{partes['letras']}{partes['numeros'][0]}{partes['letra']}{''.join(partes['numeros'][1:])}"]
+        pasos[-1] = pasos[-1].replace("<letra>", partes['letra'])
         return pasos
