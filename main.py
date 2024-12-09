@@ -46,6 +46,14 @@ class MatriculasApp:
         self.bandera_label = None
         self.setup_ui()
 
+    def mostrar_bandera(self, pais_nombre):
+        """Muestra la bandera del país"""
+        bandera_label = crear_imagen_bandera(pais_nombre)
+        if bandera_label:
+            return bandera_label
+        else:
+            return None
+
     def mostrar_formato(self, pais):
         """Muestra el formato de la matrícula del país seleccionado"""
         mensajes = {
@@ -220,11 +228,66 @@ class MatriculasApp:
 
     def analizar_matricula(self):
         # Implementar la lógica de análisis de matrícula
-        pass
+        matricula = self.entry_matricula.get().strip().upper()
+        resultados = []
+
+        self.text_resultado.delete(1.0, tk.END)
+        self.text_resultado.configure(bg='white')
+
+        for pais in self.paises:
+            valido, partes = pais.validar_matricula(matricula)
+            if valido:
+                derivacion = []
+                if hasattr(pais, "derivar_matricula"):
+                    derivacion = pais.derivar_matricula(partes)
+
+                resultado = f"\n=== RESULTADO PARA {pais.nombre.upper()} ===\n\n"
+                resultado += f"🚗 Matrícula analizada: {matricula}\n"
+                resultado += f"📍 País identificado: {pais.nombre}\n"
+
+                if "region" in partes:
+                    resultado += f"🗺️ Región: {partes['region']}\n"
+                if "departamentos" in partes:
+                    resultado += f"📌 Departamentos: {partes['departamentos']}\n"
+                if "provincia" in partes:
+                    resultado += f"🏛️ Provincia: {partes['provincia']}\n"
+                if "departamento" in partes:
+                    resultado += f"🏢 Departamento: {partes['departamento']}\n"
+                if "ciudad" in partes:
+                    resultado += f"🌆 Ciudad: {partes['ciudad']}\n"
+                if "servicio" in partes:
+                    resultado += f"🔤 Tipo de vehículo: {partes['servicio']}\n"
+
+                resultado += "\n📝 Derivación por la izquierda:\n"
+                for paso in derivacion:
+                    resultado += f"➜ {paso}\n"
+
+                resultado += "\n" + "=" * 50 + "\n"
+
+                resultados.append((pais.nombre, resultado, self.mostrar_bandera(pais.nombre)))
+
+        if resultados:
+            if len(resultados) > 1:
+                self.text_resultado.insert(tk.END, "⚠️ ¡ATENCIÓN! La matrícula es válida en múltiples países:\n")
+                for pais, res, bandera in resultados:
+                    if bandera:
+                        self.text_resultado.window_create(tk.END, window=bandera)
+                    self.text_resultado.insert(tk.END, res)
+            else:
+                if resultados[0][2]:
+                    self.text_resultado.window_create(tk.END, window=resultados[0][2])
+                self.text_resultado.insert(tk.END, resultados[0][1])
+
+            self.text_resultado.configure(bg='#E8F8F5')
+        else:
+            self.text_resultado.configure(bg='#FADBD8')
+            messagebox.showerror("Error", "❌ Formato de matrícula inválido o no corresponde a ningún país disponible.")
 
     def limpiar_pantalla(self):
         # Implementar la lógica para limpiar la pantalla
-        pass
+        self.entry_matricula.delete(0, tk.END)
+        self.text_resultado.delete(1.0, tk.END)
+        #self.mostrar_bandera("")
 
 if __name__ == "__main__":
     root = tk.Tk()
