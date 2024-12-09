@@ -4,7 +4,7 @@ from paises.pais import Pais
 class Cuba(Pais):
     def __init__(self):
         super().__init__("Cuba")
-        self.patron_vehiculos = re.compile(r'^[A-Z] \d{3} \d{3}$')  # Regex pattern for vehicles
+        self.patron_vehiculos = re.compile(r'^[A-Z] \d{3} \d{3}$')
         self.tipos_vehiculos = {
             "A": "Oficial",
             "C": "Diplomático",
@@ -26,7 +26,7 @@ class Cuba(Pais):
             partes = {
                 "matricula": matricula,
                 "letra": letra,
-                "numeros": matricula[2:].replace(" ", ""),
+                "numeros": matricula[1:],
                 "tipo_vehiculo": tipo_vehiculo
             }
             return True, partes

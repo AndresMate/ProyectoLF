@@ -31,7 +31,7 @@ class Rd(Pais):
                 partes = {
                     "matricula": matricula,
                     "letra": letra,
-                    "numeros": matricula[2:],
+                    "numeros": matricula[1:],
                     "tipo_vehiculo": self.tipos_vehiculos[letra]
                 }
                 return True, partes
@@ -40,11 +40,11 @@ class Rd(Pais):
     def derivar_matricula(self, partes):
         # Derivación por la izquierda
         matricula = partes["matricula"]
-        pasos = ["<matricula>", "<republicadominicana>", "<letra><numeros>"]
+        pasos = ["<matricula>", "<republicadominicana>", "<letra> <numeros>"]
         letra = matricula[0]
         numeros = matricula[2:]
-        pasos.append(f"{letra}<numeros>")
+        pasos.append(f"{letra} <numeros>")
         for i in range(len(numeros)):
-            pasos.append(f"{letra}{numeros[:i + 1]}<numeros>")
+            pasos.append(f"{letra} {numeros[:i + 1]}<numeros>")
         pasos[-1] = pasos[-1].replace("<numeros>", "")
         return pasos

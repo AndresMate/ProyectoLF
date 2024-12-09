@@ -5,9 +5,8 @@ class Costa(Pais):
     def __init__(self):
         super().__init__("Costa Rica")
 
-
         self.tipos = {
-            "privados": r"^[B-Z]{3}-\d{4}$",
+            "privados": r"^[B-DF-HJ-NP-TV-Z]{3}-\d{3}$",  # Updated pattern to exclude vowels
             "especiales": r"^(AB|SJB|C|CC|CD|CL|D|M|PE|TA|TSJ|VH) \d{5}$"
         }
 
@@ -18,7 +17,8 @@ class Costa(Pais):
                 "tipo": "privados",
                 "matricula": matricula,
                 "letras": letras,
-                "numeros": numeros
+                "numeros": numeros,
+                "tipo_vehiculo": "Privado"
             }
         elif re.match(self.tipos["especiales"], matricula):
             tipo, numeros = matricula.split(" ")
@@ -26,12 +26,12 @@ class Costa(Pais):
                 "tipo": "especiales",
                 "matricula": matricula,
                 "categoria": tipo,
-                "numeros": numeros
+                "numeros": numeros,
+                "tipo_vehiculo": "Especial"
             }
         return False, {}
 
     def derivar_matricula(self, partes):
-
         matricula = partes["matricula"]
         pasos = ["<matricula>"]
         if partes["tipo"] == "privados":

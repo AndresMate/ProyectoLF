@@ -64,11 +64,11 @@ class Ecuador(Pais):
         provincia = matricula[0]
         letras = matricula[1:3]
         numeros = matricula[4:]
-        pasos.append(f"{provincia}<letras><numeros>")
+        pasos.append(f"{provincia}<letras>-<numeros>")
         for i in range(len(letras)):
-            pasos.append(f"{provincia}{letras[:i + 1]}<letras><numeros>")
+            pasos.append(f"{provincia}{letras[:i + 1]}<letras><-><numeros>")
         pasos[-1] = pasos[-1].replace("<letras>", f"{letras}")
         for i in range(len(numeros)):
-            pasos.append(f"{provincia}{letras}{numeros[:i + 1]}<numeros>")
+            pasos.append(f"{provincia}{letras}-{numeros[:i + 1]}<numeros>")
         pasos[-1] = pasos[-1].replace("<numeros>", "")
         return pasos

@@ -57,16 +57,26 @@ class MatriculasApp:
     def mostrar_formato(self, pais):
         """Muestra el formato de la matrícula del país seleccionado"""
         mensajes = {
-            "Argentina": "Ejemplo de matrícula: AA895AA",
-            "Ecuador": "Ejemplo de matrícula: ABC-1234",
-            "El Salvador": "Ejemplo de matrícula: AB123 456",
-            "Haiti": "Ejemplo de matrícula: AA 12345",
-            "México": "Ejemplo de matrícula: ABC-123",
-            "Panamá": "Ejemplo de matrícula: 123456 o AB1234",
-            "Paraguay": "Ejemplo de matrícula: ABCD123",
-            "Perú": "Ejemplo de matrícula: ABC-123",
-            "Costa Rica": "Ejemplo de matrícula: ABC-1234"
+            "Colombia": "Ejemplo de matrícula: AAA 000\nFormato: 3 letras + 3 números\nUso: Vehículos particulares.",
+            "Argentina": "Ejemplo de matrícula: AA 000 AA\nFormato: 2 letras + 3 números + 2 letras\nUso: Vehículos particulares.",
+            "Bolivia": "Ejemplo de matrícula: A0000AAA\nFormato: 1 letra + 4 números + 3 letras\nUso: Vehículos privados.",
+            "Brasil": "Ejemplo de matrícula: AAA0A00\nFormato: 3 letras + 1 número + 1 letra + 2 números\nUso: Vehículos particulares y oficiales.",
+            "Uruguay": "Ejemplo de matrícula: AAA 0000\nFormato: 3 letras + 4 números\nUso: Vehículos privados.",
+            "Venezuela": "Ejemplo de matrícula: AA000AA\nFormato: 2 letras + 3 números + 2 letras\nUso: Vehículos particulares.",
+            "Panamá": "Ejemplo de matrícula: 000000 o AA0000\nFormato: 6 números o 2 letras + 4 números\nUso: Vehículos privados y comerciales.",
+            "Costa Rica": "Ejemplo de matrícula: AAA-000\nFormato: 3 letras + 1 guion + 3 números\nUso: Vehículos particulares.",
+            "Chile": "Ejemplo de matrícula: BB-BB 00\nFormato: 2 letras + 1 guion + 2 letras + 1 espacio + 2 números\nUso: Vehículos privados.",
+            "Paraguay": "Ejemplo de matrícula: AAAA 000\nFormato: 4 letras + 3 números\nUso: Vehículos privados.",
+            "El Salvador": "Ejemplo de matrícula: A000 000\nFormato: 1 letra + 3 números + 1 espacio + 3 números\nUso: Vehículos privados.",
+            "Cuba": "Ejemplo de matrícula: A 000 000\nFormato: 1 letra + 1 espacio + 3 números + 1 espacio + 3 números\nUso: Vehículos privados.",
+            "Haití": "Ejemplo de matrícula: AA·00000\nFormato: 2 letras + 1 punto + 5 números\nUso: Vehículos privados.",
+            "República Dominicana": "Ejemplo de matrícula: A 000000\nFormato: 1 letra + 1 espacio + 6 números\nUso: Vehículos particulares.",
+            "Ecuador": "Ejemplo de matrícula: AAA-0000\nFormato: 3 letras + 1 guion + 4 números\nUso: Vehículos particulares y comerciales.",
+            "Perú": "Ejemplo de matrícula: A0A-000\nFormato: 1 letra + 1 número + 1 letra + 1 guion + 3 números\nUso: Vehículo público.\n\n" +
+                    "Ejemplo de matrícula: AA0-000\nFormato: 2 letras + 1 número + 1 guion + 3 números\nUso: Vehículo gubernamental.\n\n" +
+                    "Ejemplo de matrícula: AAA-000\nFormato: 3 letras + 1 guion + 3 números\nUso: Vehículo particular."
         }
+
 
         mensaje = mensajes.get(pais.nombre, f"No hay formatos de matrícula disponibles para {pais.nombre}.")
         messagebox.showinfo("Formato de Matrícula", mensaje)
@@ -255,6 +265,8 @@ class MatriculasApp:
                     resultado += f"🏢 Departamento: {partes['departamento']}\n"
                 if "ciudad" in partes:
                     resultado += f"🌆 Ciudad: {partes['ciudad']}\n"
+                if "estado" in partes:
+                    resultado += f"🌆 Estado: {partes['estado']}\n"
                 if "tipo_vehiculo" in partes:
                     resultado += f"🔤 Tipo de vehículo: {partes['tipo_vehiculo']}\n"
 

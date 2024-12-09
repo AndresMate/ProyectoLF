@@ -27,7 +27,7 @@ class Uruguay(Pais):
         }
 
     def validar_matricula(self, matricula):
-        patron = r"^[A-Z]{1}[A-Z]{2}\d{4}$"
+        patron = r"^[A-Z]{1}[A-Z]{2} \d{4}$"
         if re.match(patron, matricula):
             primer_caracter = matricula[0]
             letras = matricula[1:3]
@@ -54,6 +54,6 @@ class Uruguay(Pais):
             pasos.append(f"{region}{letras[:i+1]}<letras><numeros>")
         pasos[-1] = pasos[-1].replace("<letras>", f"{letras}")
         for i in range(len(numeros)):
-            pasos.append(f"{region}{letras}{numeros[:i+1]}<numeros>")
+            pasos.append(f"{region}{letras} {numeros[:i+1]}<numeros>")
         pasos[-1] = pasos[-1].replace("<numeros>", "")
         return pasos

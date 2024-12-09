@@ -13,7 +13,7 @@ class Haiti(Pais):
                 partes = {
                     "matricula": matricula,
                     "letras": letras,
-                    "numeros": matricula[3:]
+                    "numeros": matricula[2:]
                 }
                 return True, partes
         return False, {}

@@ -34,7 +34,7 @@ class Colombia:
 
     def validar_matricula(self, matricula):
         # Validar formato general de Colombia
-        patron = r"^[A-Z]{3}\d{3}$"
+        patron = r"^[A-Z]{3} \d{3}$"
         if re.match(patron, matricula):
             prefijo = matricula[:6]  # Las primeras 6 posiciones identifican el rango
             for departamento, rangos in self.rangos_departamentos.items():
